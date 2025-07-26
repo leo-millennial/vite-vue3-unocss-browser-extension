@@ -9,8 +9,10 @@ const name = ref('')
 </script>
 
 <template>
-  <div text="red-500 2xl" p="4">
-    welcome
+  <div m="10">
+    <div text="blue-500 2xl">
+      Welcome<span v-if="name">,</span> <span color="green-600">{{ name }}</span>
+    </div>
+    <input v-model="name" mt="4" type="text" placeholder="Type name" class="input placeholder:text-pink-400">
   </div>
-  <input v-model="name" type="text" pa="6" border="2 blue-500 rounded-lg" placeholder="Enter your name">
 </template>
