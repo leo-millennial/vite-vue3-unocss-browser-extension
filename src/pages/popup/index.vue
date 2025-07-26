@@ -69,174 +69,147 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import { sendMessage, onMessage } from 'webext-bridge/popup'
+import browser from 'webextension-polyfill'
 
 const response = ref<any>(null)
 const contentUpdates = ref<any[]>([])
 const contextInvalidated = ref(false)
 
-// Функция для проверки контекста расширения
+// Утилиты
 function isExtensionContextValid(): boolean {
-  try {
-    return !!chrome.runtime?.id
-  } catch {
-    return false
-  }
+    try {
+        return !!browser.runtime?.id
+    } catch {
+        return false
+    }
 }
 
-// Функция для обработки ошибок контекста
 function handleContextError(error: any): boolean {
-  if (error instanceof Error && error.message.includes('Extension context invalidated')) {
-    contextInvalidated.value = true
-    return true
-  }
-  return false
+    if (error.message?.includes('Extension context invalidated')) {
+        contextInvalidated.value = true
+        return true
+    }
+    return false
 }
 
-// Функция для перезагрузки расширения
-function reloadExtension() {
-  try {
-    console.log('Reloading extension...')
-    chrome.runtime.reload()
-  } catch {
-    window.location.reload()
-  }
+async function reloadExtension() {
+    try {
+        await browser.runtime.reload()
+    } catch (error) {
+        console.error('Failed to reload extension:', error)
+    }
 }
 
-// Обработчик сообщений от content script
-const unsubscribe = onMessage('content-update', ({ data }) => {
-  if (!isExtensionContextValid()) {
-    contextInvalidated.value = true
-    return
-  }
-
-  contentUpdates.value.unshift(data)
-  if (contentUpdates.value.length > 10) {
-    contentUpdates.value = contentUpdates.value.slice(0, 10)
-  }
-})
-
+// Основные функции - используем webext-bridge для общения
 async function pingContent() {
-  console.log('pingContent called')
+    console.log('pingContent called')
 
-  if (!isExtensionContextValid()) {
-    console.log('Extension context invalid')
-    contextInvalidated.value = true
-    return
-  }
-
-  try {
-    console.log('Sending ping to content-script via webext-bridge...')
-
-    // Получаем активную вкладку для отправки сообщения
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    if (!tab.id) {
-      response.value = { error: 'No active tab' }
-      return
+    if (!isExtensionContextValid()) {
+        console.log('Extension context invalid')
+        contextInvalidated.value = true
+        return
     }
 
-    console.log('Active tab ID:', tab.id)
+    try {
+        console.log('Sending ping to content-script via webext-bridge...')
 
-    const result = await sendMessage('ping', null, `content-script@${tab.id}`)
-    console.log('Ping result:', result)
-    response.value = { ping: result }
-  } catch (error) {
-    console.error('Ping error:', error)
-    if (handleContextError(error)) return
-    response.value = {
-      error: 'Content script not available',
-      details: error instanceof Error ? error.message : 'Unknown error'
+        // Используем browser.tabs для получения активной вкладки
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true })
+        const tab = tabs[0]
+
+        if (!tab.id) {
+            response.value = { error: 'No active tab' }
+            return
+        }
+
+        console.log('Active tab ID:', tab.id)
+
+        // Используем webext-bridge для отправки сообщения
+        const result = await sendMessage('ping', null, `content-script@${tab.id}`)
+        console.log('Ping result:', result)
+        response.value = { ping: result }
+    } catch (error) {
+        console.error('Ping error:', error)
+        if (handleContextError(error)) return
+        response.value = {
+            error: 'Content script not available',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        }
     }
-  }
 }
 
 async function getTabInfo() {
-  console.log('getTabInfo called')
-
-  if (!isExtensionContextValid()) {
-    console.log('Extension context invalid')
-    contextInvalidated.value = true
-    return
-  }
-
-  try {
-    console.log('Sending get-tab-info to background...')
-    const result = await sendMessage('get-tab-info', null, 'background')
-    console.log('Tab info result:', result)
-    response.value = result
-  } catch (error) {
-    console.error('Tab info error:', error)
-    if (handleContextError(error)) return
-    response.value = { error: error instanceof Error ? error.message : 'Unknown error' }
-  }
+    try {
+        // Используем webext-bridge для получения информации о вкладке
+        const result = await sendMessage('get-tab-info', null, 'background')
+        response.value = result
+    } catch (error) {
+        if (handleContextError(error)) return
+        response.value = {
+            error: error instanceof Error ? error.message : 'Unknown error'
+        }
+    }
 }
 
 async function getPageInfo() {
-  console.log('getPageInfo called')
+    try {
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true })
+        const tab = tabs[0]
 
-  if (!isExtensionContextValid()) {
-    console.log('Extension context invalid')
-    contextInvalidated.value = true
-    return
-  }
+        if (!tab.id) {
+            response.value = { error: 'No active tab' }
+            return
+        }
 
-  try {
-    console.log('Sending get-page-info to content-script via webext-bridge...')
-
-    // Получаем активную вкладку для отправки сообщения
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    if (!tab.id) {
-      response.value = { error: 'No active tab' }
-      return
+        // Используем webext-bridge для получения информации о странице
+        const result = await sendMessage('get-page-info', null, `content-script@${tab.id}`)
+        response.value = result
+    } catch (error) {
+        if (handleContextError(error)) return
+        response.value = {
+            error: error instanceof Error ? error.message : 'Unknown error'
+        }
     }
-
-    console.log('Active tab ID:', tab.id)
-
-    const result = await sendMessage('get-page-info', null, `content-script@${tab.id}`)
-    console.log('Page info result:', result)
-    response.value = result
-  } catch (error) {
-    console.error('Page info error:', error)
-    if (handleContextError(error)) return
-    response.value = {
-      error: 'Content script not available',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }
-  }
 }
 
 async function checkContentScript() {
-  console.log('checkContentScript called')
-
-  try {
-    // Получаем активную вкладку
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    if (!tab.id) {
-      response.value = { error: 'No active tab' }
-      return
-    }
-
-    // Проверяем, загружен ли content script
     try {
-      await chrome.tabs.sendMessage(tab.id, { type: 'ping' })
-      response.value = { contentScript: 'loaded' }
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true })
+        const tab = tabs[0]
+
+        if (!tab.id) {
+            response.value = { error: 'No active tab' }
+            return
+        }
+
+        // Используем webext-bridge вместо browser.tabs.sendMessage
+        const result = await sendMessage('check-content-script', null, `content-script@${tab.id}`)
+        response.value = {
+            contentScriptAvailable: true,
+            response: result
+        }
     } catch (error) {
-      response.value = {
-        contentScript: 'not loaded',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      }
+        response.value = {
+            contentScriptAvailable: false,
+            error: error instanceof Error ? error.message : 'Unknown error'
+        }
     }
-  } catch (error) {
-    console.error('Check content script error:', error)
-    response.value = { error: error instanceof Error ? error.message : 'Unknown error' }
-  }
 }
+
+// Обработчик сообщений от content script через webext-bridge
+const unsubscribe = onMessage('content-update', ({ data }) => {
+    contentUpdates.value.unshift(data)
+    if (contentUpdates.value.length > 10) {
+        contentUpdates.value = contentUpdates.value.slice(0, 10)
+    }
+})
 
 // Проверка контекста при загрузке
 if (!isExtensionContextValid()) {
-  contextInvalidated.value = true
+    contextInvalidated.value = true
 }
 
 onUnmounted(() => {
-  unsubscribe()
+    unsubscribe?.()
 })
 </script>
