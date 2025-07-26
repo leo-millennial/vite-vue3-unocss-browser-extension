@@ -4,7 +4,14 @@
     { "path": "./tsconfig.node.json" }
   ],
   "files": [],
+  "include": [
+    "src/**/*.d.ts"
+  ],
   "compilerOptions": {
     "incremental": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

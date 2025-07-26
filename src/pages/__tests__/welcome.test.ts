@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { typeInInput } from '@/shared/config/tests/'
+import { typeInInput } from '@/shared/config/tests'
 import WelcomePage from '../welcome/index.vue'
 
 describe('welcomePage', () => {

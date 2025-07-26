@@ -1,35 +1,55 @@
 {
-  "name": "vite-vue3-browser-extension",
+  "name": "@leo-millenial/vite-vue-bex",
   "type": "module",
-  "version": "0.0.1",
-  "description": "starter template for browsing extension with  Vite, Vue 3, Unocss, DaisyUi, Vitest",
+  "version": "1.0.0",
+  "description": "A modern template for creating Chrome extensions using Vue 3, TypeScript, Vite, and UnoCSS",
+  "private": false,
+  "author": {
+    "name": "Leonid Konchulizov",
+    "email": "konchulizov@icloud.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leo-millenial/vite-vue-bex.git"
+  },
+  "homepage": "https://github.com/leo-millenial/vite-vue-bex#readme",
+  "bugs": {
+    "url": "https://github.com/leo-millenial/vite-vue-bex/issues"
+  },
   "keywords": [
     "browser-extension",
     "chrome-extension",
     "bex",
     "vue3",
     "vite",
+    "typescript",
     "unocss",
     "daisyui",
-    "typescript",
-    "vitest",
-    "vue-test-utils",
     "template",
-    "starter",
-    "webextension"
+    "webext"
   ],
-  "author": "konchilizov@icloud.com",
+  "files": [
+    "src",
+    "public",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    "uno.config.ts",
+    "shim.d.ts",
+    "README.md",
+    "README.ru.md"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "test": "vitest --config vitest.config.ts",
-    "test:ui": "vitest --ui --config vitest.config.ts",
-    "test:run": "vitest run --config vitest.config.ts",
-    "test:watch": "vitest --watch --config vitest.config.ts",
-    "test:coverage": "vitest run --coverage --config vitest.config.ts"
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.8",
