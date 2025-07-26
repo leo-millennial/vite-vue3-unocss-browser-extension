@@ -6,10 +6,15 @@
   "author": "konchilizov@icloud.com",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "test": "vitest --config vitest.config.ts",
+    "test:ui": "vitest --ui --config vitest.config.ts",
+    "test:run": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --watch --config vitest.config.ts",
+    "test:coverage": "vitest run --coverage --config vitest.config.ts"
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.8",
@@ -27,12 +32,17 @@
     "@unocss/eslint-plugin": "^66.3.3",
     "@unocss/preset-wind4": "^66.3.3",
     "@vitejs/plugin-vue": "^6.0.0",
+    "@vitest/ui": "^3.2.4",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "chrome-types": "^0.1.332",
     "eslint": "^9.31.0",
+    "happy-dom": "^18.0.1",
+    "jsdom": "^26.1.0",
     "typescript": "~5.6.2",
     "unocss": "^66.3.3",
     "vite": "^7.0.6",
+    "vitest": "^3.2.4",
     "vue-tsc": "^2.2.0",
     "webextension-polyfill": "^0.12.0"
   }
