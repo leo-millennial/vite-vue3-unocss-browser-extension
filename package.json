@@ -1,19 +1,19 @@
 {
-  "name": "leo-millenial/vite-vue-bex",
+  "name": "@leo-millenial/vite-vue-bex",
   "type": "module",
   "version": "1.0.0",
-  "description": "A modern template for creating Chrome extensions using Vue 3, TypeScript, Vite, and UnoCSS",
   "private": false,
+  "description": "A modern template for creating Chrome extensions using Vue 3, TypeScript, Vite, and UnoCSS",
   "author": {
     "name": "Leonid Konchulizov",
     "email": "konchulizov@icloud.com"
   },
   "license": "MIT",
+  "homepage": "https://github.com/leo-millenial/vite-vue-bex#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/leo-millenial/vite-vue-bex.git"
   },
-  "homepage": "https://github.com/leo-millenial/vite-vue-bex#readme",
   "bugs": {
     "url": "https://github.com/leo-millenial/vite-vue-bex/issues"
   },
@@ -31,23 +31,23 @@
     "starter-template",
     "boilerplate"
   ],
-  "files": [
-    "src",
-    "public",
-    "vite.config.ts",
-    "vitest.config.ts",
-    "tsconfig.json",
-    "tsconfig.app.json",
-    "tsconfig.node.json",
-    "uno.config.ts",
-    "shim.d.ts",
-    "manifest.config.ts",
-    "README.md",
-    "README.ru.md"
-  ],
   "bin": {
     "create-vite-vue-bex": "./bin/create-template.js"
   },
+  "files": [
+    "README.md",
+    "README.ru.md",
+    "manifest.config.ts",
+    "public",
+    "shim.d.ts",
+    "src",
+    "tsconfig.app.json",
+    "tsconfig.json",
+    "tsconfig.node.json",
+    "uno.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
@@ -56,10 +56,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint .",
     "format": "prettier --write src/",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run lint && npm run test"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.8",

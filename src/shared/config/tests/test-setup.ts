@@ -34,11 +34,15 @@ vi.mock('webext-bridge/popup', () => ({
 }))
 
 // Global test setup
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}))
+// eslint-disable-next-line no-restricted-globals
+if (global && global?.ResizeObserver) {
+  // eslint-disable-next-line no-restricted-globals
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+}
 
 // Mock для chrome extension API
 Object.defineProperty(window, 'chrome', {
