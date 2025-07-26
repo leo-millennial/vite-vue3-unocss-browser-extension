@@ -6,8 +6,9 @@ import UnoCSS from 'unocss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [UnoCSS() , vue(), crx({ manifest })],
+    plugins: [UnoCSS(), vue(), crx({ manifest })],
     build: {
+        target: 'baseline-widely-available',
         rollupOptions: {
             input: {
                 popup: 'src/pages/popup/index.html',
