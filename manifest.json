@@ -9,7 +9,7 @@
     "storage"
   ],
   "background": {
-    "service_worker": "src/background/index.ts",
+    "service_worker": "src/app/background/index.ts",
     "type": "module"
   },
   "content_scripts": [
@@ -18,7 +18,7 @@
         "<all_urls>"
       ],
       "js": [
-        "src/content/index.ts"
+        "src/app/content/index.ts"
       ],
       "run_at": "document_end"
     }

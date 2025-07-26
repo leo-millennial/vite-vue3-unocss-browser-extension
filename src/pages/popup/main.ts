@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import '../../styles.ts'
+import '../styles.ts'
 import App from './index.vue'
 
 const app = createApp(App)
