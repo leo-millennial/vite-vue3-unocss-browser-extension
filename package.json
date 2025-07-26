@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ameinhardt/unocss-preset-daisy": "^1.1.8",
     "@unocss/reset": "^66.3.3",
+    "daisyui": "^5.0.47",
     "vue": "^3.5.13",
     "webext-bridge": "^6.0.1"
   },
