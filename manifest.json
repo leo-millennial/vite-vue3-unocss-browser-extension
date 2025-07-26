@@ -27,19 +27,19 @@
     "default_title": "Vue Extension",
     "default_popup": "src/pages/popup/index.html",
     "default_icon": {
-      "16": "src/public/images/16px.png",
-      "48": "src/public/images/48px.png",
-      "128": "src/public/images/128px.png"
+      "16": "images/16px.png",
+      "48": "images/48px.png",
+      "128": "images/128px.png"
     }
   },
   "icons": {
-    "16": "src/public/images/16px.png",
-    "48": "src/public/images/48px.png",
-    "128": "src/public/images/128px.png"
+    "16": "images/16px.png",
+    "48": "images/48px.png",
+    "128": "images/128px.png"
   },
   "web_accessible_resources": [
     {
-      "resources": ["src/public/images/*"],
+      "resources": ["images/*"],
       "matches": ["<all_urls>"]
     }
   ]
