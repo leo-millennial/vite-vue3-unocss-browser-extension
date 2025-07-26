@@ -1,8 +1,23 @@
 {
-  "name": "vite-vue3-unocss-browser-extension",
+  "name": "vite-vue3-browser-extension",
   "type": "module",
   "version": "0.0.1",
-  "description": "starter template",
+  "description": "starter template for browsing extension with  Vite, Vue 3, Unocss, DaisyUi, Vitest",
+  "keywords": [
+    "browser-extension",
+    "chrome-extension",
+    "bex",
+    "vue3",
+    "vite",
+    "unocss",
+    "daisyui",
+    "typescript",
+    "vitest",
+    "vue-test-utils",
+    "template",
+    "starter",
+    "webextension"
+  ],
   "author": "konchilizov@icloud.com",
   "scripts": {
     "dev": "vite",

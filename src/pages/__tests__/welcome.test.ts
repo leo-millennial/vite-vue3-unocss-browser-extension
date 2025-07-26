@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { typeInInput } from '@/shared/config/tests/'
 import WelcomePage from '../welcome/index.vue'
 
-describe('WelcomePage', () => {
+describe('welcomePage', () => {
   let wrapper: any
 
   beforeEach(() => {
@@ -25,11 +26,8 @@ describe('WelcomePage', () => {
     expect(input.attributes('placeholder')).toBe('Type name')
   })
 
-  it('должен обновлять имя при вводе', async () => {
-    const input = wrapper.find('input[type="text"]')
-
-    await input.setValue('Тестовое имя')
-
+  it('должен обновлять имя при вводе (с хелпером)', async () => {
+    await typeInInput(wrapper, 'input[type="text"]', 'Тестовое имя')
     expect(wrapper.vm.name).toBe('Тестовое имя')
   })
 
