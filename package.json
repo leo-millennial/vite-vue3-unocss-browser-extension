@@ -1,5 +1,5 @@
 {
-  "name": "@leo-millenial/vite-vue-bex",
+  "name": "leo-millenial/vite-vue-bex",
   "type": "module",
   "version": "1.0.0",
   "description": "A modern template for creating Chrome extensions using Vue 3, TypeScript, Vite, and UnoCSS",
@@ -27,7 +27,9 @@
     "unocss",
     "daisyui",
     "template",
-    "webext"
+    "webext",
+    "starter-template",
+    "boilerplate"
   ],
   "files": [
     "src",
@@ -39,9 +41,16 @@
     "tsconfig.node.json",
     "uno.config.ts",
     "shim.d.ts",
+    "manifest.config.ts",
     "README.md",
     "README.ru.md"
   ],
+  "bin": {
+    "create-vite-vue-bex": "./bin/create-template.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -49,7 +58,8 @@
     "test:ui": "vitest --ui",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test"
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.8",

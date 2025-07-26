@@ -4,6 +4,11 @@
 
 A modern template for creating Chrome extensions using Vue 3, TypeScript, Vite, and UnoCSS.
 
+Install template
+```bash
+npx degit leo-millenial/vite-vue-bex <my-project-name>
+```
+
 ## 🚀 Features
 
 - ⚡ **Fast development** with [Vite](https://vitejs.dev/)
