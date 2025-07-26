@@ -3,13 +3,13 @@
     "target": "ES2022",
     "lib": ["ES2023"],
     "module": "ESNext",
-    "skipLibCheck": true,
     "moduleResolution": "bundler",
+    "types": ["@types/node"],
+    "strict": true,
+    "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "strict": true,
-    "types": ["@types/node"]
+    "skipLibCheck": true
   },
   "include": [
     "vite.config.ts",

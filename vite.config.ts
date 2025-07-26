@@ -1,26 +1,26 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import { crx } from '@crxjs/vite-plugin'
-import manifest from './manifest.json'
+import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
+import manifest from './manifest.json'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [UnoCSS(), vue(), crx({ manifest })],
-    build: {
-        target: 'baseline-widely-available',
-        rollupOptions: {
-            input: {
-                popup: 'src/pages/popup/index.html',
-                welcome: 'src/pages/welcome/index.html',
-            },
-        },
+  plugins: [UnoCSS(), vue(), crx({ manifest })],
+  build: {
+    target: 'baseline-widely-available',
+    rollupOptions: {
+      input: {
+        popup: 'src/pages/popup/index.html',
+        welcome: 'src/pages/welcome/index.html',
+      },
     },
-    server: {
-        port: 5173,
-        strictPort: true,
-        hmr: {
-            port: 5173,
-        },
+  },
+  server: {
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      port: 5173,
     },
+  },
 })

@@ -1,13 +1,15 @@
 {
-  "version": "0.0.1",
   "name": "vite-vue3-unocss-browser-extension",
+  "type": "module",
+  "version": "0.0.1",
   "description": "starter template",
   "author": "konchilizov@icloud.com",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@ameinhardt/unocss-preset-daisy": "^1.1.8",
@@ -17,14 +19,17 @@
     "webext-bridge": "^6.0.1"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^5.0.0",
     "@crxjs/vite-plugin": "^2.0.0",
     "@types/chrome": "^0.1.1",
     "@types/node": "^24.1.0",
     "@types/webextension-polyfill": "^0.12.3",
+    "@unocss/eslint-plugin": "^66.3.3",
     "@unocss/preset-wind4": "^66.3.3",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
     "chrome-types": "^0.1.332",
+    "eslint": "^9.31.0",
     "typescript": "~5.6.2",
     "unocss": "^66.3.3",
     "vite": "^7.0.6",
