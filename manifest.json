@@ -1,16 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Chrome-Extension-Template-Vue",
-  "description": "description",
-  "version": "1.0.0",
+  "name": "Vue Extension",
+  "description": "Vue 3 Chrome Extension",
+  "version": "0.0.1",
   "permissions": [
-    "identity",
-    "identity.email",
-    "contextMenus",
-    "activeTab"
+    "activeTab",
+    "tabs",
+    "storage"
   ],
   "background": {
-    "service_worker": "src/background.ts",
+    "service_worker": "src/background/index.ts",
     "type": "module"
   },
   "content_scripts": [
@@ -19,15 +18,13 @@
         "<all_urls>"
       ],
       "js": [
-        "src/content/content.ts"
+        "src/content/index.ts"
       ],
-      "run_at": "document_end",
-      "match_about_blank": true,
-      "all_frames": true
+      "run_at": "document_end"
     }
   ],
   "action": {
-    "default_title": "Click Open",
+    "default_title": "Vue Extension",
     "default_popup": "src/pages/popup/index.html",
     "default_icon": {
       "16": "src/public/images/16px.png",
@@ -39,5 +36,11 @@
     "16": "src/public/images/16px.png",
     "48": "src/public/images/48px.png",
     "128": "src/public/images/128px.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/public/images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
